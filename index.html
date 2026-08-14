@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Two Team Cricket Game</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #dfeaf5, #b9cbe0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ================= START SCREEN ================= */
+
+.start-screen {
+    width: 500px;
+    max-width: 95%;
+    background: white;
+    padding: 35px;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.start-screen h1 {
+    color: #078bc8;
+    margin-bottom: 25px;
+}
+
+.start-screen input {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 17px;
+}
+
+.start-screen label {
+    display: block;
+    text-align: left;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #444;
+}
+
+.start-button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: #078bc8;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.start-button:hover {
+    background: #056fa3;
+}
+
+
+/* ================= GAME ================= */
+
+.game {
+    display: none;
+    width: 600px;
+    max-width: 100%;
+    background: #f5f7fa;
+    border-radius: 25px;
+    padding: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.title {
+    text-align: center;
+    color: #078bc8;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.innings {
+    background: #078bc8;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 25px;
+}
+
+.team-name {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    padding: 10px;
+}
+
+.score-box {
+    background: white;
+    border-radius: 25px;
+    text-align: center;
+    padding: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+}
+
+.score {
+    font-size: 70px;
+    font-weight: bold;
+    color: #111827;
+}
+
+.score .slash {
+    color: #f04444;
+}
+
+.overs {
+    margin-top: 12px;
+    background: #edf0f3;
+    border-radius: 20px;
+    padding: 12px;
+    text-align: center;
+    font-size: 26px;
+    color: #4b5c72;
+    font-weight: bold;
+}
+
+.target {
+    text-align: center;
+    font-size: 17px;
+    color: #e05b00;
+    font-weight: bold;
+    padding: 8px;
+}
+
+.buttons {
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+button {
+    border: none;
+    border-radius: 15px;
+    height: 58px;
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.15s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+.dot {
+    background: white;
+    color: #40546d;
+}
+
+.wide,
+.noball {
+    background: #078bc8;
+}
+
+.one {
+    background: #12b982;
+}
+
+.two {
+    background: #2864e5;
+}
+
+.three {
+    background: #13b1c9;
+}
+
+.four {
+    background: #142be8;
+    font-size: 28px;
+}
+
+.wicket {
+    background: #ff0808;
+}
+
+.six {
+    background: #ed7805;
+    font-size: 28px;
+}
+
+.undo {
+    grid-column: 1 / 4;
+    background: #b5ff00;
+    color: #111;
+    height: 50px;
+}
+
+.message {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #078bc8;
+    min-height: 30px;
+    margin-top: 10px;
+}
+
+.last-over {
+    margin-top: 12px;
+    background: white;
+    border-radius: 15px;
+    padding: 12px;
+    text-align: center;
+}
+
+.last-over-title {
+    color: #555;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.ball-result {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    margin: 3px;
+    color: white;
+    font-weight: bold;
+    background: #777;
+}
+
+.bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.scoreboard {
+    background: #4d45df;
+}
+
+.reset {
+    background: #63748b;
+}
+
+
+/* ================= POPUP ================= */
+
+.popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.popup-box {
+    width: 450px;
+    max-width: 90%;
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    text-align: center;
+}
+
+.popup-box h1 {
+    color: #078bc8;
+}
+
+.popup-score {
+    font-size: 55px;
+    font-weight: bold;
+}
+
+.close {
+    background: #078bc8;
+    width: 150px;
+    margin-top: 15px;
+}
+
+
+/* ================= RESULT ================= */
+
+.result-title {
+    font-size: 32px;
+    color: #078bc8;
+    margin-bottom: 15px;
+}
+
+.winner {
+    font-size: 25px;
+    font-weight: bold;
+    color: #16a34a;
+}
+
+.result-score {
+    font-size: 25px;
+    margin: 10px;
+}
+
+.new-match {
+    background: #078bc8;
+    width: 100%;
+    margin-top: 15px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:500px) {
+
+    body {
+        padding: 8px;
+    }
+
+    .game {
+        padding: 10px;
+    }
+
+    .score {
+        font-size: 55px;
+    }
+
+    button {
+        font-size: 16px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= START SCREEN ================= -->
+
+<div class="start-screen" id="startScreen">
+
+    <h1>🏏 CRICKET MATCH</h1>
+
+    <label>Team 1 Name</label>
+    <input
+        type="text"
+        id="team1Input"
+        placeholder="Enter Team 1"
+        value="Team A"
+    >
+
+    <label>Team 2 Name</label>
+    <input
+        type="text"
+        id="team2Input"
+        placeholder="Enter Team 2"
+        value="Team B"
+    >
+
+    <label>Number of Overs</label>
+
+    <input
+        type="number"
+        id="oversInput"
+        value="2"
+        min="1"
+        max="50"
+    >
+
+    <button
+        class="start-button"
+        onclick="startMatch()"
+    >
+        🏏 START MATCH
+    </button>
+
+</div>
+
+
+
+<!-- ================= GAME SCREEN ================= -->
+
+<div class="game" id="game">
+
+    <div class="title">
+        🏏 CRICKET
+    </div>
+
+    <div class="innings" id="innings">
+        1ST INNINGS
+    </div>
+
+    <div class="team-name" id="currentTeam">
+        Team A
+    </div>
+
+    <div class="score-box">
+
+        <div class="score">
+
+            <span id="runs">0</span>
+
+            <span class="slash">/</span>
+
+            <span id="wickets">0</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="overs">
+
+        OVERS:
+        <span id="overs">0.0</span>
+        /
+        <span id="maxOvers">2</span>
+
+    </div>
+
+
+    <div class="target" id="target">
+
+    </div>
+
+
+    <div class="buttons">
+
+        <button
+            class="dot"
+            onclick="playBall('dot')"
+        >
+            Dot
+        </button>
+
+        <button
+            class="wide"
+            onclick="playBall('wide')"
+        >
+            Wide
+        </button>
+
+        <button
+            class="noball"
+            onclick="playBall('noball')"
+        >
+            No Ball
+        </button>
+
+
+        <button
+            class="one"
+            onclick="playBall('1')"
+        >
+            1
+        </button>
+
+        <button
+            class="two"
+            onclick="playBall('2')"
+        >
+            2
+        </button>
+
+        <button
+            class="three"
+            onclick="playBall('3')"
+        >
+            3
+        </button>
+
+
+        <button
+            class="four"
+            onclick="playBall('4')"
+        >
+            4
+        </button>
+
+        <button
+            class="wicket"
+            onclick="playBall('wicket')"
+        >
+            Wicket
+        </button>
+
+        <button
+            class="six"
+            onclick="playBall('6')"
+        >
+            6
+        </button>
+
+
+        <button
+            class="undo"
+            onclick="undoLast()"
+        >
+            ↶ Undo Last Action
+        </button>
+
+    </div>
+
+
+    <div
+        class="message"
+        id="message"
+    ></div>
+
+
+    <div class="last-over">
+
+        <div class="last-over-title">
+            BALLS
+        </div>
+
+        <div id="ballHistory"></div>
+
+    </div>
+
+
+    <div class="bottom">
+
+        <button
+            class="scoreboard"
+            onclick="showScoreboard()"
+        >
+            Scoreboard
+        </button>
+
+        <button
+            class="reset"
+            onclick="resetMatch()"
+        >
+            Reset Match
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= SCOREBOARD POPUP ================= -->
+
+<div
+    class="popup"
+    id="scoreboardPopup"
+>
+
+    <div class="popup-box">
+
+        <h1>🏏 SCOREBOARD</h1>
+
+        <h2 id="popupTeam">
+            Team A
+        </h2>
+
+        <div class="popup-score">
+
+            <span id="popupRuns">0</span>
+            /
+            <span id="popupWickets">0</span>
+
+        </div>
+
+        <p>
+            Overs:
+            <strong id="popupOvers">
+                0.0
+            </strong>
+        </p>
+
+        <p>
+            Total Balls:
+            <strong id="popupBalls">
+                0
+            </strong>
+        </p>
+
+        <button
+            class="close"
+            onclick="closeScoreboard()"
+        >
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= RESULT POPUP ================= -->
+
+<div
+    class="popup"
+    id="resultPopup"
+>
+
+    <div class="popup-box">
+
+        <div class="result-title">
+            🏆 MATCH RESULT
+        </div>
+
+        <div
+            class="winner"
+            id="winnerText"
+        >
+        </div>
+
+        <div
+            class="result-score"
+            id="resultScore"
+        >
+        </div>
+
+        <button
+            class="new-match"
+            onclick="newMatch()"
+        >
+            NEW MATCH
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* ==========================================
+   MATCH VARIABLES
+========================================== */
+
+let team1 = "";
+let team2 = "";
+
+let totalOvers = 2;
+
+let currentInnings = 1;
+
+let runs = 0;
+let wickets = 0;
+let balls = 0;
+
+let team1Score = 0;
+let team1Wickets = 0;
+
+let team2Score = 0;
+let team2Wickets = 0;
+
+let history = [];
+
+let matchFinished = false;
+
+
+
+/* ==========================================
+   START MATCH
+========================================== */
+
+function startMatch() {
+
+    team1 =
+        document.getElementById("team1Input").value.trim();
+
+    team2 =
+        document.getElementById("team2Input").value.trim();
+
+    totalOvers =
+        parseInt(
+            document.getElementById("oversInput").value
+        );
+
+
+    if (team1 === "") {
+        team1 = "Team A";
+    }
+
+    if (team2 === "") {
+        team2 = "Team B";
+    }
+
+
+    if (
+        isNaN(totalOvers) ||
+        totalOvers < 1
+    ) {
+
+        alert("Please enter a valid number of overs.");
+
+        return;
+    }
+
+
+    // Reset everything
+
+    currentInnings = 1;
+
+    runs = 0;
+    wickets = 0;
+    balls = 0;
+
+    team1Score = 0;
+    team1Wickets = 0;
+
+    team2Score = 0;
+    team2Wickets = 0;
+
+    history = [];
+
+    matchFinished = false;
+
+
+    document.getElementById(
+        "startScreen"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "game"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "maxOvers"
+    ).innerText = totalOvers;
+
+
+    updateDisplay();
+
+    showMessage(
+        team1 + " is batting first!"
+    );
+
+}
+
+
+
+/* ==========================================
+   PLAY BALL
+========================================== */
+
+function playBall(type) {
+
+    if (matchFinished) {
+        return;
+    }
+
+
+    /*
+        Check innings limit.
+
+        Example:
+        2 overs = 12 legal balls
+    */
+
+    if (
+        balls >= totalOvers * 6
+    ) {
+        endInnings();
+        return;
+    }
+
+
+    /*
+        Save current state for UNDO
+    */
+
+    history.push({
+
+        runs: runs,
+
+        wickets: wickets,
+
+        balls: balls,
+
+        currentInnings: currentInnings,
+
+        team1Score: team1Score,
+
+        team1Wickets: team1Wickets,
+
+        team2Score: team2Score,
+
+        team2Wickets: team2Wickets
+
+    });
+
+
+
+    /* =========================
+       DOT
+    ========================= */
+
+    if (type === "dot") {
+
+        balls++;
+
+        showMessage("Dot Ball");
+
+    }
+
+
+    /* =========================
+       1 RUN
+    ========================= */
+
+    else if (type === "1") {
+
+        runs += 1;
+
+        balls++;
+
+        showMessage("1 Run");
+
+    }
+
+
+    /* =========================
+       2 RUNS
+    ========================= */
+
+    else if (type === "2") {
+
+        runs += 2;
+
+        balls++;
+
+        showMessage("2 Runs");
+
+    }
+
+
+    /* =========================
+       3 RUNS
+    ========================= */
+
+    else if (type === "3") {
+
+        runs += 3;
+
+        balls++;
+
+        showMessage("3 Runs");
+
+    }
+
+
+    /* =========================
+       FOUR
+    ========================= */
+
+    else if (type === "4") {
+
+        runs += 4;
+
+        balls++;
+
+        showMessage("FOUR! 🔥");
+
+    }
+
+
+    /* =========================
+       SIX
+    ========================= */
+
+    else if (type === "6") {
+
+        runs += 6;
+
+        balls++;
+
+        showMessage("SIX! 🚀");
+
+    }
+
+
+    /* =========================
+       WIDE
+    ========================= */
+
+    else if (type === "wide") {
+
+        runs += 1;
+
+        /*
+            Wide does NOT count
+            as a legal delivery.
+        */
+
+        showMessage("Wide Ball");
+
+    }
+
+
+    /* =========================
+       NO BALL
+    ========================= */
+
+    else if (type === "noball") {
+
+        runs += 1;
+
+        /*
+            No Ball does NOT count
+            as a legal delivery.
+        */
+
+        showMessage("No Ball");
+
+    }
+
+
+    /* =========================
+       WICKET
+    ========================= */
+
+    else if (type === "wicket") {
+
+        wickets++;
+
+        balls++;
+
+        showMessage("WICKET! ❌");
+
+    }
+
+
+    updateDisplay();
+
+
+    /*
+        Team 2 can win before
+        completing all overs.
+    */
+
+    if (
+        currentInnings === 2 &&
+        runs > team1Score
+    ) {
+
+        finishMatch();
+
+        return;
+    }
+
+
+    /*
+        Check whether innings
+        has finished.
+    */
+
+    if (
+        balls >= totalOvers * 6 ||
+        wickets >= 10
+    ) {
+
+        endInnings();
+
+    }
+
+}
+
+
+
+/* ==========================================
+   END INNINGS
+========================================== */
+
+function endInnings() {
+
+
+    if (currentInnings === 1) {
+
+        /*
+            Save Team 1 score
+        */
+
+        team1Score = runs;
+
+        team1Wickets = wickets;
+
+
+        /*
+            Start Team 2 innings
+        */
+
+        currentInnings = 2;
+
+        runs = 0;
+        wickets = 0;
+        balls = 0;
+
+        history = [];
+
+
+        updateDisplay();
+
+
+        showMessage(
+            team2 +
+            " is batting! Target: " +
+            (team1Score + 1)
+        );
+
+
+        return;
+    }
+
+
+    /*
+        Team 2 innings finished
+    */
+
+    if (currentInnings === 2) {
+
+        team2Score = runs;
+
+        team2Wickets = wickets;
+
+        finishMatch();
+
+    }
+
+}
+
+
+
+/* ==========================================
+   FINISH MATCH
+========================================== */
+
+function finishMatch() {
+
+    matchFinished = true;
+
+
+    /*
+        Save current team score
+    */
+
+    if (currentInnings === 2) {
+
+        team2Score = runs;
+
+        team2Wickets = wickets;
+
+    }
+
+
+    let winner = "";
+
+    let result = "";
+
+
+    if (
+        team1Score > team2Score
+    ) {
+
+        winner = "🏆 " + team1 + " WINS!";
+
+        result =
+            team1Score +
+            "/" +
+            team1Wickets +
+            " vs " +
+            team2Score +
+            "/" +
+            team2Wickets;
+
+    }
+
+    else if (
+        team2Score > team1Score
+    ) {
+
+        winner = "🏆 " + team2 + " WINS!";
+
+        result =
+            team2Score +
+            "/" +
+            team2Wickets +
+            " vs " +
+            team1Score +
+            "/" +
+            team1Wickets;
+
+    }
+
+    else {
+
+        winner = "🤝 MATCH TIED!";
+
+        result =
+            team1Score +
+            " - " +
+            team2Score;
+
+    }
+
+
+    document.getElementById(
+        "winnerText"
+    ).innerText = winner;
+
+
+    document.getElementById(
+        "resultScore"
+    ).innerText = result;
+
+
+    document.getElementById(
+        "resultPopup"
+    ).style.display = "flex";
+
+}
+
+
+
+/* ==========================================
+   DISPLAY
+========================================== */
+
+function updateDisplay() {
+
+
+    document.getElementById(
+        "runs"
+    ).innerText = runs;
+
+
+    document.getElementById(
+        "wickets"
+    ).innerText = wickets;
+
+
+    let over =
+        Math.floor(balls / 6);
+
+    let ball =
+        balls % 6;
+
+
+    document.getElementById(
+        "overs"
+    ).innerText =
+        over + "." + ball;
+
+
+    /*
+        Current team
+    */
+
+    if (currentInnings === 1) {
+
+        document.getElementById(
+            "innings"
+        ).innerText =
+            "1ST INNINGS";
+
+
+        document.getElementById(
+            "currentTeam"
+        ).innerText =
+            team1;
+
+    }
+
+    else {
+
+        document.getElementById(
+            "innings"
+        ).innerText =
+            "2ND INNINGS";
+
+
+        document.getElementById(
+            "currentTeam"
+        ).innerText =
+            team2;
+
+    }
+
+
+    /*
+        Target
+    */
+
+    if (currentInnings === 2) {
+
+        document.getElementById(
+            "target"
+        ).innerText =
+            "TARGET: " +
+            (team1Score + 1);
+
+    }
+
+    else {
+
+        document.getElementById(
+            "target"
+        ).innerText =
+            "FIRST INNINGS";
+
+    }
+
+
+    /*
+        Ball history
+    */
+
+    let html = "";
+
+
+    let recent =
+        history.slice(-12);
+
+
+    recent.forEach(function(item) {
+
+        let result = "";
+
+
+        if (item.type === "dot") {
+
+            result = "•";
+
+        }
+
+        else if (
+            item.type === "wicket"
+        ) {
+
+            result = "W";
+
+        }
+
+        else if (
+            item.type === "wide"
+        ) {
+
+            result = "Wd";
+
+        }
+
+        else if (
+            item.type === "noball"
+        ) {
+
+            result = "Nb";
+
+        }
+
+        else {
+
+            result = item.type;
+
+        }
+
+
+        html +=
+            `<span class="ball-result">
+                ${result}
+             </span>`;
+
+    });
+
+
+    document.getElementById(
+        "ballHistory"
+    ).innerHTML = html;
+
+}
+
+
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+function showMessage(text) {
+
+    document.getElementById(
+        "message"
+    ).innerText = text;
+
+}
+
+
+
+/* ==========================================
+   UNDO
+========================================== */
+
+function undoLast() {
+
+    if (history.length === 0) {
+
+        showMessage(
+            "Nothing to undo"
+        );
+
+        return;
+    }
+
+
+    let previous =
+        history.pop();
+
+
+    runs =
+        previous.runs;
+
+    wickets =
+        previous.wickets;
+
+    balls =
+        previous.balls;
+
+    currentInnings =
+        previous.currentInnings;
+
+    team1Score =
+        previous.team1Score;
+
+    team1Wickets =
+        previous.team1Wickets;
+
+    team2Score =
+        previous.team2Score;
+
+    team2Wickets =
+        previous.team2Wickets;
+
+
+    matchFinished = false;
+
+
+    updateDisplay();
+
+
+    showMessage(
+        "↶ Last action undone"
+    );
+
+}
+
+
+
+/* ==========================================
+   SCOREBOARD
+========================================== */
+
+function showScoreboard() {
+
+    document.getElementById(
+        "popupTeam"
+    ).innerText =
+        currentInnings === 1
+        ? team1
+        : team2;
+
+
+    document.getElementById(
+        "popupRuns"
+    ).innerText =
+        runs;
+
+
+    document.getElementById(
+        "popupWickets"
+    ).innerText =
+        wickets;
+
+
+    let over =
+        Math.floor(balls / 6);
+
+    let ball =
+        balls % 6;
+
+
+    document.getElementById(
+        "popupOvers"
+    ).innerText =
+        over + "." + ball;
+
+
+    document.getElementById(
+        "popupBalls"
+    ).innerText =
+        balls;
+
+
+    document.getElementById(
+        "scoreboardPopup"
+    ).style.display =
+        "flex";
+
+}
+
+
+
+/* ==========================================
+   CLOSE SCOREBOARD
+========================================== */
+
+function closeScoreboard() {
+
+    document.getElementById(
+        "scoreboardPopup"
+    ).style.display =
+        "none";
+
+}
+
+
+
+/* ==========================================
+   RESET MATCH
+========================================== */
+
+function resetMatch() {
+
+    if (
+        !confirm(
+            "Are you sure you want to reset the match?"
+        )
+    ) {
+        return;
+    }
+
+
+    document.getElementById(
+        "game"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "startScreen"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "resultPopup"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "scoreboardPopup"
+    ).style.display =
+        "none";
+
+}
+
+
+
+/* ==========================================
+   NEW MATCH
+========================================== */
+
+function newMatch() {
+
+    document.getElementById(
+        "resultPopup"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "game"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "startScreen"
+    ).style.display =
+        "block";
+
+}
+
+</script>
+
+</body>
+</html>
